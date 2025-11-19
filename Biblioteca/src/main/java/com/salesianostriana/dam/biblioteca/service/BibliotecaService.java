@@ -43,7 +43,7 @@ public class BibliotecaService {
 
     public BibliotecaResponse edit(CreateBibliotecaCmd cmd, Long id) {
         Biblioteca biblioteca = validate(cmd);
-        if (!repository.findById(id).isPresent()) {
+        if (repository.findById(id).isEmpty()) {
             throw new BibliotecaNotFoundException(id);
         } else {
             biblioteca.setId(id);
