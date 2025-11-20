@@ -113,6 +113,33 @@ public class BibliotecaController {
                 .body(service.save(cmd));
     }
 
+    @Operation(summary = "Obtén una biblioteca en especifico")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Se ha encontrado la biblioteca buscada",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = BibliotecaResponse.class),
+                            examples = @ExampleObject("""
+                                    {
+                                        "id": 1,
+                                        "cityName": "Madrid",
+                                        "libraryName": "Biblioteca Nacional de España",
+                                        "foundationDate": "1712-12-29",
+                                        "numBooks": 30000000,
+                                        "description": "La Biblioteca Nacional de España es un centro bibliográfico español que tiene por objetivo reunir, catalogar y conservar fondos bibliográficos, así como promover la investigación y difundir la información bibliográfica.",
+                                        "url": "https://www.bne.es"
+                                    }
+                                    """)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "No se ha encontrado la biblioteca deseada."
+
+            )
+    })
     @GetMapping("/{id:[0-9]+}")
     public ResponseEntity<BibliotecaResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
